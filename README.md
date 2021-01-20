@@ -9,6 +9,7 @@ But I had several problems, in particular:
 * The Jack input interface had to be created for the USB cable each time, and the ALSA device number was different each time.
 * The Jack inputs had to be connected to Rocksmith manually each time.
 * The `RS_ASIO.ini` file had to be changed if I wanted to play in multiplayer mode with multiple interfaces.
+* Automatic Proton updates discarded the WineASIO library, making the game unable to start.
 
 This script was created to fix those problems.
 

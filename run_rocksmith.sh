@@ -1,5 +1,8 @@
 #!/bin/bash
 
+WINEASIO=/usr/lib/i386-linux-gnu/wine/wineasio.dll.so
+SOUND_DEVICE_REGEX="USB PnP Sound Device"
+
 # Locate the Rocksmith directory
 for ARG in "$@"; do
     if [[ `basename -- "$ARG"` = "Rocksmith2014.exe" ]]; then
@@ -7,8 +10,19 @@ for ARG in "$@"; do
     fi
 done
 
+# Locate the Proton directory
+for ARG in "$@"; do
+    if [[ `basename -- "$ARG"` = "proton" ]]; then
+        PPATH=`dirname -- "$ARG"`
+    fi
+done
+
+# Copy wineasio library if not present
+if [[ ! -f "$PPATH/dist/lib/wine/wineasio.dll.so" ]]; then
+    cp $WINEASIO "$PPATH/dist/lib/wine/"
+fi
+
 # Find USB interfaces
-SOUND_DEVICE_REGEX="USB PnP Sound Device"
 CARDS=(`arecord -l | grep "^card " | grep "\[$SOUND_DEVICE_REGEX\]" | sed "s/^card \([0-9]*\): .*$/\1/"`)
 
 # Update RS_ASIO.ini for multiplayer
