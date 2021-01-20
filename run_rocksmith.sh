@@ -41,7 +41,7 @@ sleep 10
 jack_disconnect system:capture_1 Rocksmith2014:in_1
 jack_disconnect system:capture_2 Rocksmith2014:in_2
 N=1
-for X in $CARDS; do
+for X in ${CARDS[@]}; do
     jack_connect USB$X:capture_1 Rocksmith2014:in_$N
     let N=N+1
 done
